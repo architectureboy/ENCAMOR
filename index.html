@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENCAMOR - دانشنامه مورس</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazir', Tahoma, Arial, sans-serif;
+            background: #0a0c0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a2c3c 0%, #0f1a24 100%);
+            color: #00ffaa;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #00ffaa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            letter-spacing: 15px;
+            text-shadow: 0 0 10px #00ffaa;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ffaa; }
+            to { text-shadow: 0 0 20px #00ffaa, 0 0 30px #00aa88; }
+        }
+        
+        .morse-line {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #ffaa00;
+            letter-spacing: 5px;
+            margin-top: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8899aa;
+            margin-top: 10px;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background: #151f2c;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #2a4050;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .sidebar h3 {
+            color: #00ffaa;
+            border-bottom: 2px solid #00ffaa;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .main {
+            background: #151f2c;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #2a4050;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            background: #1e2b38;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid #2a4050;
+        }
+        
+        .category-card:hover {
+            background: #2a4050;
+            transform: translateY(-5px);
+            border-color: #00ffaa;
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .article {
+            background: #1e2b38;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-right: 4px solid #00ffaa;
+        }
+        
+        .article h2 {
+            color: #ffaa00;
+            margin-bottom: 15px;
+        }
+        
+        .morse-code {
+            background: #0a0c0f;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #00ffaa;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: left;
+            border: 1px dashed #00ffaa;
+        }
+        
+        .new-article {
+            background: #1e2b38;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #0a0c0f;
+            border: 1px solid #2a4050;
+            border-radius: 5px;
+            color: #e0e0e0;
+            font-family: inherit;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #00ffaa;
+        }
+        
+        button {
+            background: #00ffaa;
+            color: #0a0c0f;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background: #00cc88;
+            box-shadow: 0 0 15px #00ffaa;
+        }
+        
+        .footer {
+            background: #0f1a24;
+            color: #8899aa;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid #2a4050;
+        }
+        
+        .status-bar {
+            background: #1e2b38;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ENCAMOR</h1>
+        <div class="morse-line">−−· · −· · −· −−− ·−· ···</div>
+        <div class="subtitle">دانشنامه مورس | جغرافی · زیست‌شناسی · گیاه‌شناسی</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>دسته‌بندی‌ها</h3>
+            <div class="category-card">
+                <div class="category-icon">🗺️</div>
+                <h4>جغرافیا</h4>
+                <small>کشورها، شهرها، طبیعت</small>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🧬</div>
+                <h4>زیست‌شناسی</h4>
+                <small>جانوران، بدن انسان</small>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🌿</div>
+                <h4>گیاه‌شناسی</h4>
+                <small>گیاهان، درختان، گل‌ها</small>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🔬</div>
+                <h4>سایر علوم</h4>
+                <small>فیزیک، شیمی، نجوم</small>
+            </div>
+            
+            <h3 style="margin-top: 30px;">📊 آمار</h3>
+            <p>مقالات: <span id="article-count">۰</span></p>
+            <p>آخرین ویرایش: <span id="last-update">-</span></p>
+        </div>
+
+        <div class="main">
+            <div class="status-bar">
+                <span>🔵 کد مورس فعال</span>
+                <span>✍️ حالت ویرایش</span>
+                <span>📡 آنلاین</span>
+            </div>
+
+            <div id="articles-container">
+                <h2 style="color: #00ffaa; margin-bottom: 20px;">📚 آخرین مقالات</h2>
+            </div>
+            
+            <div class="new-article">
+                <h3 style="color: #00ffaa; margin-bottom: 20px;">➕ نوشتن مقاله جدید</h3>
+                <input type="text" id="article-title" placeholder="عنوان مقاله">
+                <textarea id="article-content" rows="8" placeholder="متن مقاله را به فارسی بنویسید..."></textarea>
+                
+                <h4 style="color: #ffaa00; margin: 20px 0 10px 0;">⚡ کد مورس (اختیاری)</h4>
+                <input type="text" id="morse-code" placeholder="مثال: −−− ··· −−· ···">
+                
+                <select id="article-category" style="width: 100%; padding: 12px; margin: 10px 0; background: #0a0c0f; border: 1px solid #2a4050; border-radius: 5px; color: white;">
+                    <option value="geography">🗺️ جغرافیا</option>
+                    <option value="biology">🧬 زیست‌شناسی</option>
+                    <option value="botany">🌿 گیاه‌شناسی</option>
+                    <option value="other">🔬 سایر</option>
+                </select>
+                
+                <button onclick="saveArticle()">✨ ذخیره مقاله</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>ENCAMOR - دانشنامه بر پایه کد مورس</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">−−· · −· · −· −−− ·−· ··· | ۲۰۲۶</p>
+    </div>
+
+    <script>
+        let articles = [];
+
+        function loadArticles() {
+            const saved = localStorage.getItem('encamor_articles');
+            if (saved) {
+                articles = JSON.parse(saved);
+            }
+            displayArticles();
+            updateStats();
+        }
+
+        function saveArticle() {
+            const title = document.getElementById('article-title').value;
+            const content = document.getElementById('article-content').value;
+            const morse = document.getElementById('morse-code').value;
+            const category = document.getElementById('article-category').value;
+            
+            if (title && content) {
+                articles.push({
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    morse: morse || 'کد مورس ثبت نشد',
+                    category: category,
+                    date: new Date().toLocaleDateString('fa-IR'),
+                    time: new Date().toLocaleTimeString('fa-IR'),
+                    views: 0
+                });
+                
+                localStorage.setItem('encamor_articles', JSON.stringify(articles));
+                
+                document.getElementById('article-title').value = '';
+                document.getElementById('article-content').value = '';
+                document.getElementById('morse-code').value = '';
+                
+                displayArticles();
+                updateStats();
+            } else {
+                alert('لطفاً عنوان و متن مقاله را وارد کنید!');
+            }
+        }
+
+        function displayArticles() {
+            const container = document.getElementById('articles-container');
+            let html = '<h2 style="color: #00ffaa; margin-bottom: 20px;">📚 آخرین مقالات</h2>';
+            
+            if (articles.length === 0) {
+                html += '<div style="text-align: center; padding: 40px; background: #1e2b38; border-radius: 10px;">';
+                html += '<p style="font-size: 1.2rem; color: #8899aa;">هنوز مقاله‌ای نوشته نشده است.</p>';
+                html += '<p style="margin-top: 10px;">اولین مقاله را با کد مورس بنویسید! ✨</p>';
+                html += '</div>';
+            } else {
+                articles.slice().reverse().forEach(article => {
+                    let categoryIcon = '';
+                    switch(article.category) {
+                        case 'geography': categoryIcon = '🗺️'; break;
+                        case 'biology': categoryIcon = '🧬'; break;
+                        case 'botany': categoryIcon = '🌿'; break;
+                        default: categoryIcon = '🔬';
+                    }
+                    
+                    html += `
+                        <div class="article">
+                            <h2>${categoryIcon} ${article.title}</h2>
+                            <div class="morse-code">${article.morse}</div>
+                            <p style="white-space: pre-line;">${article.content}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                                <small style="color: #8899aa;">
+                                    📅 ${article.date} | ⏰ ${article.time} | 👁️ ${article.views}
+                                </small>
+                                <button onclick="editArticle(${articles.length - 1 - articles.indexOf(article)})" style="background: #ffaa00; color: #0a0c0f; padding: 8px 15px;">
+                                    ✏️ ویرایش
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function editArticle(index) {
+            const article = articles[index];
+            document.getElementById('article-title').value = article.title;
+            document.getElementById('article-content').value = article.content;
+            document.getElementById('morse-code').value = article.morse;
+            document.getElementById('article-category').value = article.category;
+            
+            articles.splice(index, 1);
+            localStorage.setItem('encamor_articles', JSON.stringify(articles));
+            displayArticles();
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('article-count').innerText = articles.length;
+            if (articles.length > 0) {
+                const lastArticle = articles[articles.length - 1];
+                document.getElementById('last-update').innerText = lastArticle.date;
+            } else {
+                document.getElementById('last-update').innerText = '-';
+            }
+        }
+
+        loadArticles();
+    </script>
+</body>
+  </html>
